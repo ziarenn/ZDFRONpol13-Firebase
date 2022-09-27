@@ -1,7 +1,16 @@
-// // named import
-// import { app } from "./firebaseConfig.js";
-// console.log(app);
+import renderHomePage from "./components/HomePage/renderHomePage.js";
 
-// // import from export default
-// import list from "./firebaseConfig.js";
-// console.log(list);
+// JEDYNY PLIK KTÓRY WYKONA SIĘ PRZY ZAŁADOWANIU STRONY
+
+// selecting all navbar buttons
+const homeButton = document.getElementById("home-anchor");
+const todosButton = document.getElementById("todos-anchor");
+const aboutButton = document.getElementById("about-anchor");
+const publicButton = document.getElementById("public-anchor");
+const loginButton = document.getElementById("login-anchor");
+
+// rendering the home page on inital page load
+renderHomePage();
+
+// rendering the home page on home button click
+homeButton.addEventListener("click", renderHomePage);
