@@ -1,23 +1,6 @@
-// W funkcji poniżej:
-// 1. Wybranie i czyszczenie sekcji content (klasa 'content', querySelector, innerHTML = '')
-// 2. Stwórz element <form> i nadaj mu id 'register-form'
-// 3. Stwórz element <h2> i nadaj mu textContent 'Register'
-// 4. Stwórz element <input>, nadaj mu type 'email', placeholder 'email', id 'input-email-register'
-// 5. Stwórz element <input>, nadaj mu type 'password', placeholder 'password', id 'first-input-password-register'
-// 6. Stwórz element <input>, nadaj mu type 'password', placeholder 'repeat password', id 'second-input-password-register'
-// 7. Stwórz element <button>, nadaj mu type 'submit' i textContent 'Register'
-// 8. Podepnij wszystkie elementy do elementu form (pkt 2) w tej kolejności:
-// - h2
-// - input email
-// - input pass 1
-// - input pass 2
-// - submit button
-// 9. Element form podepnij do sekcji content
-// 10. Na formularz (pkt 2) nałóż event listener (będziemy reagować na submit, pamiętaj o event.preventDefault())
-// 11. W event listenerze:
-// - zbieracie zawartość wszystkich inputów do osobnych zmiennych (.value !!!)
-// 12. Sprawdź console.logiem czy zbieranie wartości działa
-// 13. Zaimportuj funkcję do index.js i podepnij ją pod loginButton
+import { auth } from "../../firebaseConfig.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
+
 export default function () {
   // 1.
   const contentContainer = document.querySelector(".content");
@@ -73,5 +56,14 @@ export default function () {
     const password2 = secondPasswordInput.value;
     // 12.
     console.log(email, password1, password2);
+  
+    if (password1 === password2) {
+      // właściwa rejestracja użytkownika
+      createUserWithEmailAndPassword(auth, email, password1)
+        .then((userCredentials) => console.log(userCredentials))
+        .catch((err) => console.log(err));
+    } else {
+      console.log("hasla sie nie zgadzaja");
+    }
   });
 }
