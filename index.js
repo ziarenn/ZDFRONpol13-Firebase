@@ -7,15 +7,6 @@ import {
 import { auth } from "./firebaseConfig.js";
 // JEDYNY PLIK KTÓRY WYKONA SIĘ PRZY ZAŁADOWANIU STRONY
 
-// reagowanie na zalogowanie i wylogowanie
-onAuthStateChanged(auth, (user)=> {
-    if (user) {
-        // ...
-    } else {
-        // ...
-    }
-})
-
 // selecting the content container
 const contentContainer = document.querySelector(".content");
 
@@ -26,6 +17,20 @@ const aboutButton = document.getElementById("about-anchor");
 const publicButton = document.getElementById("public-anchor");
 const loginButton = document.getElementById("login-anchor");
 
+// signInWithEmailAndPassword -> (request do firebase że chce się zalogować) -> FIREBASE (sprawdza czy email i haslo sie zgadza) -> response (zalogowano lub nie) -> onAuthStateChanged
+
+// reagowanie na zalogowanie i wylogowanie
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log(`User is logged in (${user.email}), onAuthStateChanged`);
+    loginButton.textContent = "Log out";
+  } else {
+    console.log(`No user logged in, onAuthStateChanged`);
+    loginButton.textContent = "Log in";
+    renderHomePage();
+  }
+});
+
 // rendering the home page on inital page load
 renderHomePage();
 
@@ -35,4 +40,11 @@ renderHomePage();
 homeButton.addEventListener("click", renderHomePage);
 
 // login button listener
-loginButton.addEventListener("click", renderLoginPage);
+loginButton.addEventListener("click", () => {
+  const user = auth.currentUser;
+  if (user) {
+    signOut(auth);
+  } else {
+    renderLoginPage();
+  }
+});
