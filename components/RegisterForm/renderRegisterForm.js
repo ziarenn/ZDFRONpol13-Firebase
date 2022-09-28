@@ -56,14 +56,18 @@ export default function () {
     const password2 = secondPasswordInput.value;
     // 12.
     console.log(email, password1, password2);
-  
-    if (password1 === password2) {
+
+    if (
+      password1 === password2 &&
+      password1.length > 6 &&
+      password2.length > 6
+    ) {
       // właściwa rejestracja użytkownika
       createUserWithEmailAndPassword(auth, email, password1)
         .then((userCredentials) => console.log(userCredentials))
         .catch((err) => console.log(err));
     } else {
-      console.log("hasla sie nie zgadzaja");
+      console.log("hasla sie nie zgadzaja lub są za krótkie");
     }
   });
 }

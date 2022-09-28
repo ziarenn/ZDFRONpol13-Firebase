@@ -1,6 +1,10 @@
 import renderHomePage from "./components/HomePage/renderHomePage.js";
 import renderRegisterForm from "./components/RegisterForm/renderRegisterForm.js";
+
 // JEDYNY PLIK KTÓRY WYKONA SIĘ PRZY ZAŁADOWANIU STRONY
+
+// selecting the content container
+const contentContainer = document.querySelector(".content");
 
 // selecting all navbar buttons
 const homeButton = document.getElementById("home-anchor");
@@ -18,4 +22,4 @@ renderHomePage();
 homeButton.addEventListener("click", renderHomePage);
 
 // login button listener
-loginButton.addEventListener("click", renderRegisterForm);
+loginButton.addEventListener("click", console.log(123));
