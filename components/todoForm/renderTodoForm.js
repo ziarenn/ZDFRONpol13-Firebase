@@ -33,7 +33,21 @@ export default function () {
     div.appendChild(label);
     fieldset.appendChild(div);
   });
-
+  ///////
+//   const divWork = document.createElement("div");
+//   divWork.setAttribute("id", "div-work");
+//   const radioWork = document.createElement("input");
+//   radioWork.setAttribute("type", "radio");
+//   radioWork.setAttribute("id", `radio-work`);
+//   radioWork.setAttribute("name", "category");
+//   radioWork.setAttribute("value", "work");
+//   const label = document.createElement("label");
+//   label.setAttribute("for", `radio-work`);
+//   label.textContent = "Work";
+//   divWork.appendChild(radioWork);
+//   divWork.appendChild(label);
+//   fieldset.appendChild(div);
+  ///////////
   // 7.
   const submitButton = document.createElement("button");
   submitButton.setAttribute("type", "submit");
@@ -48,11 +62,3 @@ export default function () {
   // 9.
   return form;
 }
-/* <div id="div-work">
-    <input type="radio" id="radio-work" name="category" value="work"/>
-    <label for="radio-work">Work</label>
-</div>
-<div id="div-life">
-    <input type="radio" id="radio-life" name="category" value="life"/>
-    <label for="radio-life">Life</label>
-</div> */
