@@ -15,22 +15,28 @@ export default function () {
     const data = snapshot.val();
 
     if (!data) {
-      // robimy to co hcemy zrobic gdy danych nie ma
-      // 1. Czyszczenie content container
-      // 2. Stwórz element <h2, textContent 'Add, remove and edit your todos'
-      // 3. Podepnij h2 pod contentContainer
-      // 4. Wywołaj funkcję renderTodoForm i zapisz wynik wywołania do zmiennej
-      // 5. Podepnij todoForm do content containera
+      // 1.
+      contentContainer.innerHTML = "";
+
+      // 2.
+      const h2 = document.createElement("h2");
+      h2.textContent = "Add, remove and edit your todos";
+
+      // 3.
+      contentContainer.appendChild(h2);
+
+      // 4.
+      const todoForm = renderTodoForm();
+
+      // 5.
+      contentContainer.appendChild(todoForm);
+
       // 6. Podepnij event listener fo todo forma (event submit)
-      // 7. Wybranie todo inputa (id: "todo-input") i ściągnięcie z niego wartości (.value)
+      todoForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        // 7. Wybranie todo inputa (id: "todo-input") i ściągnięcie z niego wartości (.value)
+        const todoText = document.getElementById("todo-input").value;
+      });
     }
   });
 }
-
-// {
-//     todos: {
-//         evruibveiub453452354: {
-//             todo1: {name: 'Wyjdź z psem', category: 'work'}
-//         }
-//     }
-// }
