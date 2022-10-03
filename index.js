@@ -6,6 +6,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
 import { auth } from "./firebaseConfig.js";
 import renderTodoForm from "./components/todoForm/renderTodoForm.js";
+import renderTodoPage from "./components/TodoPage/renderTodoPage.js";
 // JEDYNY PLIK KTÓRY WYKONA SIĘ PRZY ZAŁADOWANIU STRONY
 
 // selecting the content container
@@ -34,7 +35,7 @@ onAuthStateChanged(auth, (user) => {
 
 // rendering the home page on inital page load
 renderHomePage();
-contentContainer.appendChild(renderTodoForm());
+
 // rendering the home page on home button click
 
 // home button listener
@@ -49,3 +50,5 @@ loginButton.addEventListener("click", () => {
     renderLoginPage();
   }
 });
+
+todosButton.addEventListener("click", renderTodoPage);
