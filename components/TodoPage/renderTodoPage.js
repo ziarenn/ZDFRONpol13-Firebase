@@ -57,56 +57,68 @@ export default function () {
           .then(() => console.log("Pushed the data successfully"))
           .catch(() => console.log("Failed to push the data"));
       });
+    } else {
+      console.log(data);
+      // 1. Wyciągnij same obiekty todo z obiektu data (Object.values()) i zapisz do zmiennej todos
+      const todos = Object.values(data);
+
+      // 2. Stwórz element <h2>, textContent "Add, remove and edit your todos"
+      const h2 = document.createElement("h2");
+      h2.textContent = "Add, remove and edit your todos";
+
+      // 3. Stwórz zmienną listItems. Wartość zmiennej listItems to wywołanie metody .map((el, i) => { ... }) na liście todos (pkt 1).
+      const listItems = todos.map((el, i) => {
+        // W metodzie map:
+        // 4. Stwórz element <li>, id `li-${i}`
+        const li = document.createElement("li");
+        li.setAttribute("id", `li-${i}`);
+
+        // 5. Stwórz element <div>, id `div-${i}`
+        const div = document.createElement("div");
+        div.setAttribute("id", `div-${i}`);
+
+        // 6. Stwórz element <span>, textContent ma zawierać todoText i category
+        const span = document.createElement("span");
+        span.textContent = `${el.todoText} (${el.category})`;
+
+        // 7. Stwórz element <button>, id `edit-button-${i}`, class "edit-button", textContent "Edit"
+        const editButton = document.createElement("button");
+        editButton.setAttribute("id", `edit-button-${i}`);
+        editButton.setAttribute("class", "edit-button");
+        //  editButton.classList.add('edit-button')
+        editButton.textContent = "Edit";
+
+        // 8. Stwórz element <button>, id `remove-button-${i}`, class "remove-button", textContent "Remove"
+        const removeButton = document.createElement("button");
+        removeButton.setAttribute("id", `remove-button-${i}`);
+        removeButton.setAttribute("class", "remove-button");
+        removeButton.textContent = "Remove";
+
+        // 9. Do diva (pkt 5) podepnij span (pkt 6), edit button (pkt 7), remove button (pkt 8)
+        div.appendChild(span);
+        div.appendChild(editButton);
+        div.appendChild(removeButton);
+
+        // 10. Do li (pkt 4) podepnij diva (pkt 5)
+        li.appendChild(div);
+
+        // 11. Z metody map zwróc li (return)
+        return li;
+      });
+
+      // 12. console.log(listItems)
+      console.log(listItems);
+
+      // 1. Stwórz element <ul>
+      const ul = document.createElement("ul");
+      // 2. Na zmiennej listItems wywołaj metode forEach. W s®odku forEacha podpinaj elementy do listy ul (pkt 1)
+      listItems.forEach((el) => ul.appendChild(el));
+      // 3. Wyczyść contentContainer
+      contentContainer.innerHTML = "";
+      // 4. Do content containera podepnij h2, todoForm (cC.apc(renderTodoForm())), ul (pkt 1)
+      contentContainer.appendChild(h2);
+      contentContainer.appendChild(renderTodoForm());
+      contentContainer.appendChild(ul);
     }
-    console.log(data);
-    // 1. Wyciągnij same obiekty todo z obiektu data (Object.values()) i zapisz do zmiennej todos
-    const todos = Object.values(data);
-
-    // 2. Stwórz element <h2>, textContent "Add, remove and edit your todos"
-    const h2 = document.createElement("h2");
-    h2.textContent = "Add, remove and edit your todos";
-
-    // 3. Stwórz zmienną listItems. Wartość zmiennej listItems to wywołanie metody .map((el, i) => { ... }) na liście todos (pkt 1).
-    const listItems = todos.map((el, i) => {
-      // W metodzie map:
-      // 4. Stwórz element <li>, id `li-${i}`
-      const li = document.createElement("li");
-      li.setAttribute("id", `li-${i}`);
-
-      // 5. Stwórz element <div>, id `div-${i}`
-      const div = document.createElement("div");
-      div.setAttribute("id", `div-${i}`);
-
-      // 6. Stwórz element <span>, textContent ma zawierać todoText i category
-      const span = document.createElement("span");
-      span.textContent = `${el.todoText} (${el.category})`;
-
-      // 7. Stwórz element <button>, id `edit-button-${i}`, class "edit-button", textContent "Edit"
-      const editButton = document.createElement("button");
-      editButton.setAttribute("id", `edit-button-${i}`);
-      editButton.setAttribute("class", "edit-button");
-      //  editButton.classList.add('edit-button')
-      editButton.textContent = "Edit";
-
-      // 8. Stwórz element <button>, id `remove-button-${i}`, class "remove-button", textContent "Remove"
-      const removeButton = document.createElement("button");
-      removeButton.setAttribute("id", `remove-button-${i}`);
-      removeButton.setAttribute("class", "remove-button");
-      removeButton.textContent = "Remove";
-
-      // 9. Do diva (pkt 5) podepnij span (pkt 6), edit button (pkt 7), remove button (pkt 8)
-      div.appendChild(span);
-      div.appendChild(editButton);
-      div.appendChild(removeButton);
-
-      // 10. Do li (pkt 4) podepnij diva (pkt 5)
-      li.appendChild(div);
-
-      // 11. Z metody map zwróc li (return)
-      return li;
-    });
-
-    // 12. console.log(listItems)
-    console.log(listItems);
   });
 }

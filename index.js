@@ -5,7 +5,6 @@ import {
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
 import { auth } from "./firebaseConfig.js";
-import renderTodoForm from "./components/todoForm/renderTodoForm.js";
 import renderTodoPage from "./components/TodoPage/renderTodoPage.js";
 // JEDYNY PLIK KTÓRY WYKONA SIĘ PRZY ZAŁADOWANIU STRONY
 
