@@ -117,6 +117,54 @@ export default function () {
       // 2. Na todoForm (pkt 1) nakładacie event listener na submit (będzie to 1:1 ten sam EL co wyżej)
       todoForm.addEventListener("submit", todoFormHandler);
       // 3. Zrób refactor (przeanalizuj, uporządkuj, skróć i ulepsz kod) w pliku renderTodoPage.js
+
+      // EDIT BUTTON
+      // 1. Wybierz wszystkie edit buttony (getElementsByClassName, "edit-button") i zamień na zwykły array (zapisujecie do zmiennej)
+      // 2. Na liście edit buttonów (pkt 1) wywołaj metode forEach (parametry: el, i)
+      // 3. Na el (parametr forEach) nakładacie event listener na click (w środku zwykła funkcja, nie strzałkowa!!!)
+      // W event listenerze:
+      // 4. Usuń z DOMu element który został kliknięty (w środku EL sprawdź co to this, sprawdź .remove())
+      // 5. Wybierz diva (getElementById, `div-${i}`)
+      // 6. Wywołaj funkcję renderTodoForm i zapisz wynik do zmiennej
+      // 7. todoForm'owi (pkt 6) nadaj id `todo-form-${i}`
+      // 8. Do diva (pkt 5) podepnij todoForm (pkt 6)
+      // 9. Na todoForm (pkt 6) nadaj event listener (submit)
+      // W EL:
+      // 10. Ściągnij todoText (this, childNodes)
+      // 11. Ściągnij kategorię (getElementsByTagName, można wywołać na this)
+      // 12. Stwórz obiekt updates (const updates = {})
+      // 13. Do obiektu updates wrzuć właśność "todos/*uid usera*/*id todosa*": { category, todoText }
+      // 14. Wywołaj funkcję update z FB
+      // const editButtons = [...document.getElementsByClassName("edit-button")];
+      // console.log(editButtons);
+      // console.log(Object.keys(data));
+
+      const editButtons = [...document.getElementsByClassName("edit-button")];
+      editButtons.forEach((el, i) => {
+        el.addEventListener("click", function () {
+          this.remove();
+          const div = document.getElementById(`div-${i}`);
+          const todoForm = renderTodoForm();
+          todoForm.setAttribute("id", `todo-form-${i}`);
+          div.appendChild(todoForm);
+          todoForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const todoText = this.childNodes[0].value;
+            console.log(todoText);
+            const category = [...this.getElementsByTagName("input")]
+              .slice(1, 5)
+              .find((input) => input.checked).value;
+            console.log(category);
+            const updates = {};
+            updates[`todos/${auth.currentUser.uid}/${Object.keys(data)[i]}`] = {
+              category,
+              todoText,
+            };
+            update(ref(database), updates);
+          });
+        });
+      });
     }
   });
 }
+

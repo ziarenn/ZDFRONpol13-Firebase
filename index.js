@@ -51,3 +51,17 @@ loginButton.addEventListener("click", () => {
 });
 
 todosButton.addEventListener("click", renderTodoPage);
+
+// const random = Math.random();
+// const x = {
+//   [random]: "This is a random number",
+// };
+// console.log(x);
+
+// const lista = [1, 2, 3, 4, 5, 6, 6, 3, 21, 423, 4453, 1];
+// const obiekt = {};
+// lista.forEach((nazwaPolaCzyliElementZListy, i) => {
+//   lista[i] = "Jakaś liczba";
+// });
+// console.log(lista);
+// console.log(obiekt);
