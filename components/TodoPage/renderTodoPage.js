@@ -1,5 +1,5 @@
 import renderTodoForm from "../todoForm/renderTodoForm.js";
-import { auth, database } from "../../firebaseConfig.js";
+import { app, auth, database } from "../../firebaseConfig.js";
 import {
   ref,
   onValue,
@@ -8,10 +8,33 @@ import {
   remove,
 } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
 
+const renderH2 = () => {
+  const h2 = document.createElement("h2");
+  h2.textContent = "Add, remove and edit your todos";
+  return h2;
+};
+
+const appendElements = (rootEl, elsToAppend) => {
+  elsToAppend.forEach((el) => rootEl.appendChild(el));
+};
+
 export default function () {
   const contentContainer = document.querySelector(".content");
 
   const todoRef = ref(database, "todos/" + auth.currentUser.uid);
+  const todoFormHandler = (event) => {
+    event.preventDefault();
+    const todoText = document.getElementById("todo-input").value;
+    const category = [...document.getElementsByName("category")].find(
+      (input) => input.checked
+    ).value;
+    push(todoRef, {
+      todoText,
+      category,
+    })
+      .then(() => console.log("Pushed the data successfully"))
+      .catch(() => console.log("Failed to push the data"));
+  };
   onValue(todoRef, (snapshot) => {
     const data = snapshot.val();
 
@@ -20,9 +43,7 @@ export default function () {
       contentContainer.innerHTML = "";
 
       // 2.
-      const h2 = document.createElement("h2");
-      h2.textContent = "Add, remove and edit your todos";
-
+      const h2 = renderH2();
       // 3.
       contentContainer.appendChild(h2);
 
@@ -33,38 +54,14 @@ export default function () {
       contentContainer.appendChild(todoForm);
 
       // 6. Podepnij event listener fo todo forma (event submit)
-      todoForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        // 7. Wybranie todo inputa (id: "todo-input") i ściągnięcie z niego wartości (.value)
-        const todoText = document.getElementById("todo-input").value;
-
-        // 3. Użyj funkcji push (z firebase'a) do wrzucenia danych do bazy.
-        // Zamiast funkcji ref() użyj zmiennej todoRef (wyżej w tym pliku)
-        // 4. Na funkcji push dodaj thena z console.log'iem "Pushed the data" i catcha z console.log'iem "failed to push"
-        // push(todoRef, {
-        //  todoText,
-        // category,
-        //}) tutaj then i catch
-
-        // 1. Ściągnij odpowiednią kategorie z formularza (z radio inputów), wszystkie radio inputy mają atrybut name "category", istnieje selektor do wybierania elementów po atrybucie name. Zamień nodeListe na zwykły array. Do znalezienia inputa który jest zaznaczony użyj metody .find(). Input zaznaczony będzie miał własność checked, po niej szukaj właściwego inputu.
-        const category = [...document.getElementsByName("category")].find(
-          (input) => input.checked
-        ).value;
-        push(todoRef, {
-          todoText,
-          category,
-        })
-          .then(() => console.log("Pushed the data successfully"))
-          .catch(() => console.log("Failed to push the data"));
-      });
+      todoForm.addEventListener("submit", todoFormHandler);
     } else {
       console.log(data);
       // 1. Wyciągnij same obiekty todo z obiektu data (Object.values()) i zapisz do zmiennej todos
       const todos = Object.values(data);
 
       // 2. Stwórz element <h2>, textContent "Add, remove and edit your todos"
-      const h2 = document.createElement("h2");
-      h2.textContent = "Add, remove and edit your todos";
+      const h2 = renderH2();
 
       // 3. Stwórz zmienną listItems. Wartość zmiennej listItems to wywołanie metody .map((el, i) => { ... }) na liście todos (pkt 1).
       const listItems = todos.map((el, i) => {
@@ -95,9 +92,7 @@ export default function () {
         removeButton.textContent = "Remove";
 
         // 9. Do diva (pkt 5) podepnij span (pkt 6), edit button (pkt 7), remove button (pkt 8)
-        div.appendChild(span);
-        div.appendChild(editButton);
-        div.appendChild(removeButton);
+        appendElements(div, [span, editButton, removeButton]);
 
         // 10. Do li (pkt 4) podepnij diva (pkt 5)
         li.appendChild(div);
@@ -116,9 +111,12 @@ export default function () {
       // 3. Wyczyść contentContainer
       contentContainer.innerHTML = "";
       // 4. Do content containera podepnij h2, todoForm (cC.apc(renderTodoForm())), ul (pkt 1)
-      contentContainer.appendChild(h2);
-      contentContainer.appendChild(renderTodoForm());
-      contentContainer.appendChild(ul);
+      appendElements(contentContainer, [h2, renderTodoForm(), ul]);
+      // 1. Wybierz todoForm przez getElementById, id "todo-form"
+      const todoForm = document.getElementById("todo-form");
+      // 2. Na todoForm (pkt 1) nakładacie event listener na submit (będzie to 1:1 ten sam EL co wyżej)
+      todoForm.addEventListener("submit", todoFormHandler);
+      // 3. Zrób refactor (przeanalizuj, uporządkuj, skróć i ulepsz kod) w pliku renderTodoPage.js
     }
   });
 }
