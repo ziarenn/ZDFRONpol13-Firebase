@@ -6,6 +6,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
 import { auth } from "./firebaseConfig.js";
 import renderTodoPage from "./components/TodoPage/renderTodoPage.js";
+import renderTeamPage from "./components/TeamPage/renderTeamPage.js";
 // JEDYNY PLIK KTÓRY WYKONA SIĘ PRZY ZAŁADOWANIU STRONY
 
 // selecting the content container
@@ -52,16 +53,4 @@ loginButton.addEventListener("click", () => {
 
 todosButton.addEventListener("click", renderTodoPage);
 
-// const random = Math.random();
-// const x = {
-//   [random]: "This is a random number",
-// };
-// console.log(x);
-
-// const lista = [1, 2, 3, 4, 5, 6, 6, 3, 21, 423, 4453, 1];
-// const obiekt = {};
-// lista.forEach((nazwaPolaCzyliElementZListy, i) => {
-//   lista[i] = "Jakaś liczba";
-// });
-// console.log(lista);
-// console.log(obiekt);
+publicButton.addEventListener('click', renderTeamPage)
