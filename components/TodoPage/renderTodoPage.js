@@ -164,7 +164,28 @@ export default function () {
           });
         });
       });
+
+      // 1. Wybranie remove buttonów (analogicznie do edit buttonow)
+      // 2. Na liście z pkt 1 wywołaj metode forEach (el, i)
+      // W forEach:
+      // 3. Na el (parametr forEach'a) nakładacie EL na click
+      // W środku EL:
+      // 4. Usuwacie całe <li> do którego należał kliknięty remove button (this, parentElement * 2, .remove())
+      // 5. Wywołanie metody remove (z firebase), usuń nią klikniętego todosa
+      const removeButtons = [
+        ...document.getElementsByClassName("remove-button"),
+      ];
+      removeButtons.forEach((el, i) => {
+        el.addEventListener("click", function () {
+          //this.parentElement.parentElement.remove();
+          remove(
+            ref(
+              database,
+              `todos/${auth.currentUser.uid}/${Object.keys(data)[i]}`
+            )
+          );
+        });
+      });
     }
   });
 }
-
