@@ -7,6 +7,7 @@ import {
 import { auth } from "./firebaseConfig.js";
 import renderTodoPage from "./components/TodoPage/renderTodoPage.js";
 import renderTeamPage from "./components/TeamPage/renderTeamPage.js";
+import renderFilePage from "./components/FilePage/renderFilePage.js";
 // JEDYNY PLIK KTÓRY WYKONA SIĘ PRZY ZAŁADOWANIU STRONY
 
 // selecting the content container
@@ -53,4 +54,6 @@ loginButton.addEventListener("click", () => {
 
 todosButton.addEventListener("click", renderTodoPage);
 
-publicButton.addEventListener('click', renderTeamPage)
+publicButton.addEventListener("click", renderTeamPage);
+
+aboutButton.addEventListener("click", renderFilePage);
