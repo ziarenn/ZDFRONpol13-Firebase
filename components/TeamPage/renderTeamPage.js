@@ -45,4 +45,34 @@ export default function () {
     };
     addDocData(todoText, category);
   });
+
+  // 1. Stwórz element <ul>, id "teams-todo-list"
+  const ul = document.createElement("ul");
+  ul.setAttribute("id", "teams-todo-list");
+  // 2. Stwórz funkcję asynchroniczną readDocData
+  const readDocData = async function () {
+    // W readDocData:
+    // 3. Stwórz zmienną querySnapshot i wywołaj w niej funkcję getDocs
+    const querySnapshot = await getDocs(collection(firestore, "teams"));
+    // Funkcja getDocs przyjmuje 1 argument, jest to referencja do grupy dokumentów (kolekcji)
+    // Aby uzyskać referencję do interesującej nas kolekcji musimy użyć funkcji collection, przyjmuje ona 2 argumenty: obiekt ref do firestore i nazwę kolekcji w stringu
+    // 4. Na zmiennej querySnapshot wywołaj forEach'a.
+
+    querySnapshot.forEach((el) => {
+      // W FE:
+      // 5. Stwórz zmienną docData i przypisz jej wywołanie funkcji data() na elemencie po którym aktualnie iterujesz (1 par z FE)
+      const docData = el.data();
+      // 6. Stwórz element <li>, textContent ma zawierać todoText i category, jedno i drugie znajdziesz w zmiennej docData (pkt 5)
+      const li = document.createElement("li");
+      li.textContent = `${docData.todoText} (${docData.category})`;
+      // 7. Podepnij li (pkt 6) do ul (pkt 1)
+      ul.appendChild(li);
+      // KONIEC FE
+    });
+  };
+
+  // 8. Wywołanie readDocData
+  readDocData();
+  // 9. Podepnij ul (pkt 1) do contentContainera.
+  contentContainer.appendChild(ul);
 }
